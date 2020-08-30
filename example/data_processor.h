@@ -19,8 +19,21 @@ typedef struct data_processor {
     kiss_fft_cfg  kiss_fft_state;
 }*data_processor_t;
 
+typedef struct data_processor_inverse {
+	float sample_hz;
+	int nfft;
+    kiss_fft_cpx *cin;
+    kiss_fft_cpx *cout;
+    kiss_fft_cfg  kiss_fft_state;
+}*data_processor_inverse_t;
+
+
 data_processor_t data_processor_init(int nfft, int hz);
 float data_processor_run(data_processor_t dfft);
 void data_processor_close(data_processor_t dfft);
+
+data_processor_inverse_t data_processor_inverse_init(int nfft, int hz);
+float data_processor_inverse_run(data_processor_inverse_t dfft);
+void data_processor_inverse_close(data_processor_inverse_t dfft);
 
 #endif /* DATA_PROCESSOR_H_ */
