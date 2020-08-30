@@ -33,7 +33,7 @@ float data_processor_run(data_processor_t dfft);
 void data_processor_close(data_processor_t dfft);
 
 data_processor_inverse_t data_processor_inverse_init(int nfft, int hz);
-float data_processor_inverse_run(data_processor_inverse_t dfft);
-void data_processor_inverse_close(data_processor_inverse_t dfft);
+float data_processor_inverse_run(data_processor_inverse_t ifft);
+void data_processor_inverse_close(data_processor_inverse_t ifft);
 
 #endif /* DATA_PROCESSOR_H_ */

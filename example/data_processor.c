@@ -38,30 +38,30 @@ static float get_peak_frequence(const kiss_fft_cpx *cout, int nfft, float start_
 	return get_peak_pos(cout, nfft, start_pos) * sample_hz / nfft;
 }
 data_processor_inverse_t data_processor_inverse_init(int nfft, int hz) {
-	data_processor_inverse_t dfft = NULL;
-	dfft = (data_processor_inverse_t)malloc(sizeof(struct data_processor));
-	if (!dfft) {
+	data_processor_inverse_t ifft = NULL;
+	ifft = (data_processor_inverse_t)malloc(sizeof(struct data_processor_inverse));
+	if (!ifft) {
 		perror("malloc");
 		return NULL;
 	}
 	//printf("dfft len = %d\n", sizeof(*data_processor_t));
-	dfft->sample_hz = hz;
-	dfft->nfft = nfft;
-	dfft->cin = (kiss_fft_cpx *)malloc(sizeof(kiss_fft_cpx) * dfft->nfft);
-	if (!dfft->cin) {
+	ifft->sample_hz = hz;
+	ifft->nfft = nfft;
+	ifft->cin = (kiss_fft_cpx *)malloc(sizeof(kiss_fft_cpx) * ifft->nfft);
+	if (!ifft->cin) {
 		perror("malloc cin");
-		free(dfft);
+		free(ifft);
 		return NULL;
 	}
-	dfft->cout = (kiss_fft_cpx *)malloc(sizeof(kiss_fft_cpx) * dfft->nfft);
-	if (!dfft->cout) {
+	ifft->cout = (kiss_fft_cpx *)malloc(sizeof(kiss_fft_cpx) * ifft->nfft);
+	if (!ifft->cout) {
 		perror("malloc cout");
-		free(dfft->cin);
-		free(dfft);
+		free(ifft->cin);
+		free(ifft);
 		return NULL;
 	}
-	dfft->kiss_fft_state = kiss_fft_alloc(nfft,1,0,0);
-	return dfft;
+	ifft->kiss_fft_state = kiss_fft_alloc(nfft,1,0,0);
+	return ifft;
 }
 
 data_processor_t data_processor_init(int nfft, int hz) {
