@@ -52,6 +52,20 @@ static int write_data(const char *filename, const kiss_fft_cpx *cout, int n) {
 	return 0;
 }
 
+static int transfer_out_in(kiss_fft_cpx *cin, const kiss_fft_cpx *cout, int n) {
+	int i = 0;
+	while (i < n) {
+		//printf("%d %12f, %12f\n",i,cout[i].r, cout[i].i);
+		
+		cin[i].r = cout[i].r;
+		cin[i].i = cout[i].i;
+		
+		printf("%d %12f, %12f\n",i,cin[i].r, cin[i].i);
+		i++;
+	}
+	return 0;
+}
+
 int main(int argc,char ** argv) {
 	const char *infile = "dump-raw-3.txt";
 	const char *outfile = "test-output.txt";
@@ -76,9 +90,20 @@ int main(int argc,char ** argv) {
 	}
 
 	write_data(outfile, dfft->cout, dfft->nfft);
-
+	
+	data_processor_inverse_t ifft = NULL;
+	ifft = data_processor_inverse_init(2048, 214000);
+	transfer_out_in(ifft->cin,dfft->cout, dfft->nfft);
+	hz = data_processor_inverse_run(ifft);
+	for (i=0; i< ifft->nfft; i++) {
+		printf("%f ,",  ifft->cout[i].r);
+	}
+	printf("hz = %12f\n", hz);
 	data_processor_close(dfft);
 	dfft = NULL;
+	
+	data_processor_inverse_close(ifft);
+	ifft = NULL;
 	return 0;
 }
 
