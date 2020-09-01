@@ -112,7 +112,8 @@ float data_processor_inverse_run(data_processor_inverse_t ifft) {
 	kiss_fft(ifft->kiss_fft_state, ifft->cin, ifft->cout);
     //convert_to_freq(ifft->cout, ifft->nfft);
     //complex_abs(ifft->cout, ifft->nfft);
-    return get_peak_frequence(ifft->cout, ifft->nfft, 500.0, ifft->sample_hz);
+    //return get_peak_frequence(ifft->cout, ifft->nfft, 500.0, ifft->sample_hz);
+    return 1.0;
 }
 
 void data_processor_inverse_close(data_processor_inverse_t ifft) {
