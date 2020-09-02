@@ -27,7 +27,7 @@ static int gensindata(kiss_fft_cpx *cin)
        sample = 5*sin(2*pi*200*t[i]);
        cin[i].r = (int)sample;
        cin[i].i = 0;
-       printf("%f,",cin[i].r);  
+       //printf("%f,",cin[i].r);  
     }
      
     return 0;
