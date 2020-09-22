@@ -25,9 +25,17 @@ $(CC) -o $@ $(CFLAGS) -I.. $(TYPEFLAGS) $+ -lm
 	-i : inverse
 	-R : real input samples, not complex
 
-cd tools
+cd example
 
-lines 131-148 can be used to print input/output
+./build.sh
+
+./real-fft
+
+cp mysig.bin ../tools
+
+cd ../tools
+
+lines 141-158 can be used to print input/output
 
 complex_abs(cbuf,nfft/2+1); if you want the magnitude of complex number.
 

@@ -10,9 +10,9 @@
 #include<math.h>
 #define pi 3.14159265
 
-static int gensindata(kiss_fft_cpx *cin)
+static int gensindata(kiss_fft_cpx *cin, int gennfft)
 {
- int i,L=2048;
+ int i,L=gennfft;
  float t[L],freq=1000,T; 
  double sample;
  T=1/freq;
@@ -25,8 +25,8 @@ static int gensindata(kiss_fft_cpx *cin)
 		 
        //sample = 1000*sin(2*pi*300*t[i])+500;
        //sample = 10*sin(2*pi*460*t[i]);
-       sample = 10*(sin(2*pi*50*t[i]) + sin(2*pi*120*t[i]) + sin(2*pi*300*t[i])); //no DC
-       //sample = 10*sin(2*pi*120*t[i]);  //no DC
+       //sample = 10*(sin(2*pi*50*t[i]) + sin(2*pi*120*t[i]) + sin(2*pi*300*t[i])); //no DC
+       sample = 10*sin(2*pi*120*t[i]);  //no DC
        cin[i].r = (int)sample;
        cin[i].i = 0;
        printf("%f,",cin[i].r);  
@@ -99,6 +99,10 @@ static int transfer_out_in(kiss_fft_cpx *cin, const kiss_fft_cpx *cout, int n) {
 }
 
 int main(int argc,char ** argv) {
+	FILE *wrptr;
+	int j,result;
+	int gennfft=1024;
+	float signal[gennfft];
 	const char *infile = "dump-raw-3.txt";
 	const char *outfile = "test-output.txt";
 	if (argc == 3) {
@@ -107,13 +111,22 @@ int main(int argc,char ** argv) {
 	}
 	float hz = 0;
 	data_processor_t dfft = NULL;
-	dfft = data_processor_init(2048, 1000);
+	dfft = data_processor_init(gennfft, 1000);
 	//dfft = data_processor_init(2048, 214000);
 	if (!dfft) {
 		fprintf(stderr, "data_processor_init error\n");
 		return -1;
 	}
-	gensindata(dfft->cin);
+	gensindata(dfft->cin,gennfft);
+	for (j=0; j< gennfft; j++) {
+		signal[j] = dfft->cin[j].r;
+		//printf("%f ,",  dfft->in[j].r);
+	}
+	wrptr = fopen("mysig.bin","w");
+	if (wrptr == 0) printf("can not open file mysig.bin for writing\n");
+    		result = fwrite(&signal[0],sizeof(float),gennfft,wrptr); 
+    fclose(wrptr);
+    
 	//read_data(infile, dfft->cin, dfft->nfft);
 
 	int i = 100;

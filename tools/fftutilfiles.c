@@ -38,6 +38,16 @@ void fft_file(FILE * fin,FILE * fout,int nfft,int isinverse)
         kiss_fft( st , buf ,bufout);
         fwrite( bufout , sizeof(kiss_fft_cpx) , nfft , fout );
     }
+    /*
+    complex_abs(bufout,nfft);
+    int j;
+    printf("%d %d %d\n",nfft,isinverse,nfft/2+1);
+         
+    for(j=0;j<nfft;j++) {
+         
+        printf("%d %f %f \n",j,bufout[j].r,bufout[j].i);
+    }
+    */
     free(st);
     free(buf);
     free(bufout);
@@ -128,16 +138,16 @@ void fft_file_real(FILE * fin,FILE * fout,int nfft,int isinverse)
             fwrite( rbuf , sizeof(kiss_fft_scalar) , nfft , fout );
         }
     }
-    /*
+    
     int j;
     printf("%d %d \n",nfft,isinverse);
     for(j=0;j<nfft;j++) {
         printf("%f\n",rbuf[j]);
     }
-    */
     
-    /* 
-    complex_abs(cbuf,nfft/2+1);
+    
+    /*
+    //complex_abs(cbuf,nfft/2+1);
     int j;
     printf("%d %d %d\n",nfft,isinverse,nfft/2+1);
          
@@ -185,18 +195,18 @@ int main(int argc,char ** argv)
     if (fout!=stdout) fclose(fout);
     if (fin!=stdin) fclose(fin);
     
-    
+    /*
     isinverse=1;
     isreal=1;
     fin = fopen("myfft.bin","rb");
     fout = fopen("myfftinv.bin","wb");
-    //fft_file(fin,fout,dims[0],isinverse);
+    fft_file(fin,fout,dims[0],isinverse);
     //fft_filend(fin,fout,dims[0],isinverse);
     //fft_filend_real(fin,fout,dims[0],isinverse);
     //fft_file_real(fin,fout,dims[0],isinverse);
     
     if (fout!=stdout) fclose(fout);
     if (fin!=stdin) fclose(fin);
-    
+    */
     return 0;
 }
