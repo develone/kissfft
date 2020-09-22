@@ -1,0 +1,26 @@
+CFLAGS=-Wall -O3 $(WARNINGS)
+TYPEFLAGS=-Dkiss_fft_scalar=$(DATATYPE)
+
+fastconv_float .../kiss_fft.c fftutil.c kiss_fftnd.c kiss_fftr.c kiss_fftndr.c
+$(CC) -o $@ $(CFLAGS) -I.. $(TYPEFLAGS) $+ -lm
+	-n nfft: fft size to use
+	-d : use direct FIR filtering, not fast convolution
+	-i filename: input file
+	-o filename: output(filtered) file
+	-n nfft: fft size to use
+	-h filename: impulse response
+
+fastconvr_float	../kiss_fft.c kiss_fastfir.c kiss_fftr.c
+$(CC) -o $@ $(CFLAGS) -I.. $(TYPEFLAGS) -DREAL_FASTFIR  $+ -DFAST_FILT_UTIL -lm
+	-n nfft: fft size to use
+	-d : use direct FIR filtering, not fast convolution
+	-i filename: input file
+	-o filename: output(filtered) file
+	-n nfft: fft size to use
+	-h filename: impulse response
+
+fft_float ../kiss_fft.c fftutil.c kiss_fftnd.c kiss_fftr.c kiss_fftndr.c	
+$(CC) -o $@ $(CFLAGS) -I.. $(TYPEFLAGS) $+ -lm
+	-n d1[,d2,d3...]: fft dimension(s)
+	-i : inverse
+	-R : real input samples, not complex
