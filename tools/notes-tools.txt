@@ -24,3 +24,13 @@ $(CC) -o $@ $(CFLAGS) -I.. $(TYPEFLAGS) $+ -lm
 	-n d1[,d2,d3...]: fft dimension(s)
 	-i : inverse
 	-R : real input samples, not complex
+
+cd tools
+
+lines 131-148 can be used to print input/output
+
+complex_abs(cbuf,nfft/2+1); if you want the magnitude of complex number.
+
+cp fftutilfiles.c fftutil.c
+
+make
