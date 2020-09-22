@@ -152,51 +152,25 @@ int main(int argc,char ** argv)
     int dims[32];
     dims[0] = 1024; /*default fft size*/
 
-    while (1) {
-        int c=getopt(argc,argv,"n:iR");
-        if (c==-1) break;
-        switch (c) {
-            case 'n':
-                ndims = get_dims(optarg,dims);
-                break;
-            case 'i':isinverse=1;break;
-            case 'R':isreal=1;break;
-            case '?':
-                     fprintf(stderr,"usage options:\n"
-                            "\t-n d1[,d2,d3...]: fft dimension(s)\n"
-                            "\t-i : inverse\n"
-                            "\t-R : real input samples, not complex\n");
-                     exit (1);
-            default:fprintf(stderr,"bad %c\n",c);break;
-        }
-    }
-
-    if ( optind < argc ) {
-        if (strcmp("-",argv[optind]) !=0)
-            fin = fopen(argv[optind],"rb");
-        ++optind;
-    }
-
-    if ( optind < argc ) {
-        if ( strcmp("-",argv[optind]) !=0 ) 
-            fout = fopen(argv[optind],"wb");
-        ++optind;
-    }
-
-    if (ndims==1) {
-        if (isreal)
-            fft_file_real(fin,fout,dims[0],isinverse);
-        else
-            fft_file(fin,fout,dims[0],isinverse);
-    }else{
-        if (isreal)
-            fft_filend_real(fin,fout,dims,ndims,isinverse);
-        else
-            fft_filend(fin,fout,dims,ndims,isinverse);
-    }
+    fin = fopen("mysig.bin","rb");
+    fout = fopen("myfft.bin","wb");
+    fft_file_real(fin,fout,dims[0],isinverse);
 
     if (fout!=stdout) fclose(fout);
     if (fin!=stdin) fclose(fin);
-
+    
+    /*
+    isinverse=1;
+    isreal=1;
+    fin = fopen("myfft.bin","wb");
+    fout = fopen("myfftinv.bin","wb");
+    fft_file(fin,fout,dims[0],isinverse);
+    //fft_filend(fin,fout,dims[0],isinverse);
+    //fft_filend_real(fin,fout,dims[0],isinverse);
+    //fft_file_real(fin,fout,dims[0],isinverse);
+    
+    if (fout!=stdout) fclose(fout);
+    if (fin!=stdin) fclose(fin);
+    */
     return 0;
 }
