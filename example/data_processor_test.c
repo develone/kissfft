@@ -101,7 +101,7 @@ static int transfer_out_in(kiss_fft_cpx *cin, const kiss_fft_cpx *cout, int n) {
 int main(int argc,char ** argv) {
 	FILE *wrptr;
 	int j,result;
-	int gennfft=1024;
+	int gennfft=2048;
 	float signal[gennfft];
 	const char *infile = "dump-raw-3.txt";
 	const char *outfile = "test-output.txt";

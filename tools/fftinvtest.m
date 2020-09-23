@@ -4,11 +4,11 @@ Fs = 1000;            % Sampling frequency
 T = 1/Fs;             % Sampling period       
 L = 2048;             % Length of signal
 t = (0:L-1)*T;        % Time vectorc
-fid = fopen('mysig.bin','r'); mysig = fread(fid, 2048, 'float');
+fid = fopen('myfftinv.bin','r'); myfftinv = fread(fid, 2048, 'float');
 figure 
-plot(1000*t(1:100),mysig(1:100))
+plot(1000*t(1:100),myfftinv(1:100))
 
-Ys = fft(mysig);
+Ys = fft(myfftinv);
 
 P2 = abs(Ys/L);
 P1 = P2(1:L/2+1);
