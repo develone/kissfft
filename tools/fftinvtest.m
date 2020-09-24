@@ -5,6 +5,7 @@ T = 1/Fs;             % Sampling period
 L = 2048;             % Length of signal
 t = (0:L-1)*T;        % Time vectorc
 fid = fopen('myfftinv.bin','r'); myfftinv = fread(fid, 2048, 'float');
+myfftinv = myfftinv/L;
 figure 
 plot(1000*t(1:100),myfftinv(1:100))
 
