@@ -25,8 +25,8 @@ static int gensindata(kiss_fft_cpx *cin, int gennfft)
 		 
        //sample = 1000*sin(2*pi*300*t[i])+500;
        //sample = 10*sin(2*pi*460*t[i]);
-       //sample = 10*(sin(2*pi*50*t[i]) + sin(2*pi*120*t[i]) + sin(2*pi*300*t[i])); //no DC
-       sample = 10*sin(2*pi*120*t[i]);  //no DC
+       sample = 10*(sin(2*pi*50*t[i]) + sin(2*pi*120*t[i]) + sin(2*pi*300*t[i])); //no DC
+       //sample = 10*sin(2*pi*120*t[i]);  //no DC
        cin[i].r = (int)sample;
        cin[i].i = 0;
        printf("%f,",cin[i].r);  
